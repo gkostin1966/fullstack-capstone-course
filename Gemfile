@@ -9,6 +9,7 @@ group :development do
   gem 'spring', '~>2.0', '>=2.0.0'
   gem 'tzinfo-data', :platforms=>[:mingw, :mswin, :x64_mingw, :jruby]
 
+  gem 'httparty', '~>0.14', '>=0.14.0'
   gem 'rspec-rails', '~> 3.5', '>=3.5.2'
 end
 
