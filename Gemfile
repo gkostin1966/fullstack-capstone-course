@@ -6,12 +6,14 @@ gem 'rack-cors', '~>0.4', '>=0.4.0', :require => 'rack/cors'
 
 group :development do
   gem 'spring', '~>2.0', '>=2.0.0'
+  gem 'webbrick', '~>1.3', '>=1.3.1', :platforms=>[:mingw, :mswin, :x64_mingw, :jruby]
   gem 'tzinfo-data', :platforms=>[:mingw, :mswin, :x64_mingw, :jruby]
 
   gem 'httparty', '~>0.14', '>=0.14.0'
   gem 'rspec-rails', '~> 3.5', '>=3.5.2'
 end
 
+gem 'puma', '~>3.6', '>=3.6.0', :platforms=>:ruby
 gem 'pg', '~>0.19', '>=0.19.0'
 gem 'mongoid', '~>5.1', '>=5.1.5'
 
