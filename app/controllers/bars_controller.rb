@@ -6,13 +6,13 @@ class BarsController < ApplicationController
   def index
     @bars = Bar.all
 
-#    render json: @bars
+    # render json: @bars
   end
 
   # GET /bars/1
   # GET /bars/1.json
   def show
-#    render json: @bar
+    # render json: @bar
   end
 
   # POST /bars

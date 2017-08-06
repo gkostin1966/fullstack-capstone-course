@@ -6,13 +6,13 @@ class StatesController < ApplicationController
   def index
     @states = State.all
 
-    render json: @states
+    # render json: @states
   end
 
   # GET /states/1
   # GET /states/1.json
   def show
-    render json: @state
+    # render json: @state
   end
 
   # POST /states
@@ -21,7 +21,8 @@ class StatesController < ApplicationController
     @state = State.new(state_params)
 
     if @state.save
-      render json: @state, status: :created, location: @state
+      # render json: @state, status: :created, location: @state
+      render :show, status: :created, location: @state
     else
       render json: @state.errors, status: :unprocessable_entity
     end

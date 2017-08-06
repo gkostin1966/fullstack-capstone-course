@@ -6,13 +6,13 @@ class CitiesController < ApplicationController
   def index
     @cities = City.all
 
-    render json: @cities
+    # render json: @cities
   end
 
   # GET /cities/1
   # GET /cities/1.json
   def show
-    render json: @city
+    # render json: @city
   end
 
   # POST /cities
@@ -21,7 +21,8 @@ class CitiesController < ApplicationController
     @city = City.new(city_params)
 
     if @city.save
-      render json: @city, status: :created, location: @city
+      # render json: @city, status: :created, location: @city
+      render :show, status: :created, location: @city
     else
       render json: @city.errors, status: :unprocessable_entity
     end
