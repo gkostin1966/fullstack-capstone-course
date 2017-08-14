@@ -10,3 +10,4 @@
 //= require spa-demo/app.constant
 
 //= require spa-demo/cities/cities.module
+//= require spa-demo/cities/cities.service
