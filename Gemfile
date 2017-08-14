@@ -12,13 +12,14 @@ gem 'uglifier', '~>3.0', '>=3.0.2'
 gem 'coffee-rails', '~>4.1', '>=4.1.0'
 gem 'jquery-rails', '~>4.2', '>=4.2.1'
 
+gem 'tzinfo-data', :platforms=>[:mingw, :mswin, :x64_mingw, :jruby]
+
 group :development do
   gem 'spring', '~>2.0', '>=2.0.0'
 end
 
 group :development, :test do
   gem 'webbrick', '~>1.3', '>=1.3.1', :platforms=>[:mingw, :mswin, :x64_mingw, :jruby]
-  gem 'tzinfo-data', :platforms=>[:mingw, :mswin, :x64_mingw, :jruby]
   gem 'byebug', '~>9.0', '>=9.0.6'
   gem 'pry-byebug', '~>3.4', '>=3.4.0'
   gem 'httparty', '~>0.14', '>=0.14.0'
