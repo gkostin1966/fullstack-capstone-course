@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe City, type: :model do
-  before(:all) { described_class.delete_all }
-  after(:all) { described_class.delete_all }
-
   describe '#create' do
     subject { described_class.create }
     it { is_expected.to be_valid }
