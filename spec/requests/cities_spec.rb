@@ -1,12 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Cities", type: :request do
+  include_context 'db_cleanup_each'
   def parsed_body
     JSON.parse(response.body)
   end
-
-  before(:all) { City.delete_all }
-  after(:each) { City.delete_all }
 
   describe "GET /api/cities" do
     let!(:city) { City.create(name: 'name') }

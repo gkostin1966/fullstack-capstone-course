@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe City, type: :model do
   # Rails.logger = Logger.new(STDOUT) in rails_helper.rb
-
-  include_context 'db_cleanup', :transaction
-  include_context 'db_scope'
+  include_context 'db_cleanup_each', :transaction
 
   describe '#create' do
     subject { described_class.create }

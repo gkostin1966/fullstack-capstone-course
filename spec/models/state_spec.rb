@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe State, type: :model, orm: :mongoid do
   # Mongo::Logger.logger.level = ::Logger::DEBUG in rails_helper.rb
-
-  include_context 'db_cleanup'
-  include_context 'db_scope'
+  include_context 'db_cleanup_each'
 
   it { is_expected.to have_field(:name).of_type(String).with_default_value_of(nil) }
 

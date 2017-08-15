@@ -1,12 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "States", type: :request do
+  include_context 'db_cleanup_each'
   def parsed_body
     JSON.parse(response.body)
   end
-
-  before(:all) { State.delete_all }
-  after(:each) { State.delete_all }
 
   describe "GET /api/states" do
     let!(:state) { State.create(name: 'name') }
