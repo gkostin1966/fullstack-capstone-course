@@ -1,13 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe City, type: :model do
-  before(:all) do
-    DatabaseCleaner[:active_record].strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-  end
-  after(:all) { DatabaseCleaner.clean_with(:truncation) }
-  before(:each) { DatabaseCleaner.start }
-  after(:each) { DatabaseCleaner.clean }
+  include_context 'db_cleanup', :transaction
+  include_context 'db_scope'
 
   describe '#create' do
     subject { described_class.create }
