@@ -35,6 +35,7 @@ end
 gem 'puma', '~>3.6', '>=3.6.0', :platforms=>:ruby
 gem 'pg', '~>0.19', '>=0.19.0'
 gem 'mongoid', '~>5.1', '>=5.1.5'
+gem 'database_cleaner', '~>1.5', '>=1.5.3'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
