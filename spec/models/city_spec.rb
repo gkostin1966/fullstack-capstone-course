@@ -14,6 +14,8 @@ RSpec.describe City, type: :model do
   describe '#name' do
     subject { described_class.create(name: 'name') }
     it 'has a name attribute' do
+      expect(subject).to be_valid
+      expect(subject.name).not_to be_nil
       expect(subject.name).to eq('name')
     end
   end
