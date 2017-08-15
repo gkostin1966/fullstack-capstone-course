@@ -1,10 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe State, type: :model do
+RSpec.describe State, type: :model, orm: :mongoid do
+  # include Mongoid::Matchers
   # Mongo::Logger.logger.level = ::Logger::DEBUG
 
   before(:all) { described_class.delete_all }
   after(:each) { described_class.delete_all }
+
+  it { is_expected.to have_field(:name).of_type(String).with_default_value_of(nil) }
 
   describe '#create' do
     subject { described_class.create }
