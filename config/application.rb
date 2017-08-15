@@ -29,6 +29,8 @@ module Capstone
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # Rails.logger = Logger.new(STDOUT)
+
     Mongoid.load! './config/mongoid.yml'
     # which default ORM are we using with scaffold
     # add --orm mongoid, or active_record
@@ -46,7 +48,7 @@ module Capstone
       end
     end
 
-    config.genrators do |g|
+    config.generators do |g|
       g.test_framework :rspec,
                        model_specs: true,
                        routing_specs: false,
