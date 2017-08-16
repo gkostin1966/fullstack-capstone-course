@@ -5,6 +5,7 @@ RSpec.describe "Cities", type: :request do
 
   describe '#index' do
     let!(:cities) { (1..5).map { |i| FactoryGirl.create(:city) } }
+
     it do
       get cities_path, { sample1: 'param', sample2: 'param' }, { 'Accept' => 'application/json' }
 
@@ -21,6 +22,7 @@ RSpec.describe "Cities", type: :request do
 
   describe '#create' do
     let(:city_state) { FactoryGirl.attributes_for(:city) }
+
     it do
       jpost cities_path, city_state
       expect(response).to have_http_status(:created)
@@ -38,7 +40,8 @@ RSpec.describe "Cities", type: :request do
   end
 
   describe '#show' do
-    let!(:city) { FactoryGirl.create(:city) }
+    let(:city) { FactoryGirl.create(:city) }
+
     it do
       get city_path(city.id)
       expect(response).to have_http_status(:ok)
@@ -56,13 +59,30 @@ RSpec.describe "Cities", type: :request do
   end
 
   describe '#update' do
+    let(:city) { FactoryGirl.create(:city) }
+    let(:new_name) { "testing" }
+
     it do
+      expect(city.name).not_to eq(new_name)
+
+      jput city_path(city.id), { name: new_name }
+      expect(response).to have_http_status(:no_content)
+      expect(City.find(city.id).name).to eq(new_name)
     end
   end
 
   describe "#destroy" do
+    let(:city) { FactoryGirl.create(:city) }
+
     it do
+      head city_path(city.id)
+      expect(response).to have_http_status(:ok)
+
+      delete city_path(city.id)
+      expect(response).to have_http_status(:no_content)
+
+      head city_path(city.id)
+      expect(response).to have_http_status(:not_found)
     end
   end
-
 end
