@@ -20,7 +20,20 @@ RSpec.describe "Cities", type: :request do
   end
 
   describe '#create' do
+    let(:city_state) { FactoryGirl.attributes_for(:city) }
     it do
+      jpost cities_path, city_state
+      expect(response).to have_http_status(:created)
+      expect(response.content_type).to eq('application/json')
+
+      payload = parsed_body
+      expect(payload).to have_key('id')
+      expect(payload).to have_key('name')
+      expect(payload["name"]).to eq(city_state[:name])
+      expect(payload).to have_key('created_at')
+      expect(payload).to have_key('updated_at')
+
+      expect(City.find(payload["id"]).name).to eq(city_state[:name])
     end
   end
 
