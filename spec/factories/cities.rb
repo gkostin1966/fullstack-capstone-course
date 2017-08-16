@@ -32,6 +32,6 @@ FactoryGirl.define do
     initialize_with { City.new(hash) }
   end
 
-  factory :city, parent: :city_fixed do
+  factory :city, parent: :city_faker do
   end
 end

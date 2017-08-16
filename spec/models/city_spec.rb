@@ -5,11 +5,11 @@ RSpec.describe City, type: :model do
   # Rails.logger = Logger.new(STDOUT) in rails_helper.rb
   include_context 'db_cleanup_each', :transaction
 
-  let(:name) { @city.name }
+  name = "Ann Arbor"
   let(:city) { City.find(@city.id) }
 
   before(:all) do
-    @city = create(:city)
+    @city = create(:city, name: name )
   end
 
   describe '#create' do
