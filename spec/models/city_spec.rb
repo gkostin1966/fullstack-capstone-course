@@ -1,21 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe City, type: :model do
+  include FactoryGirl::Syntax::Methods
   # Rails.logger = Logger.new(STDOUT) in rails_helper.rb
   include_context 'db_cleanup_each', :transaction
 
+  let(:name) { @city.name }
+  let(:city) { City.find(@city.id) }
+
+  before(:all) do
+    @city = create(:city)
+  end
+
   describe '#create' do
-    subject { described_class.create }
+    subject { city }
     it { is_expected.to be_valid }
     it { is_expected.to be_persisted }
     it { expect(described_class.find(subject.id)).not_to be_nil }
     it { expect(described_class.find(subject.id)).to eq(subject) }
-    it { before_count = described_class.count; subject; expect(described_class.count).to eq(before_count + 1) }
+    xit { before_count = described_class.count; subject; expect(described_class.count).to eq(before_count + 1) }
   end
 
   describe '#name' do
-    let(:name) { "name" }
-    subject { described_class.create(name: name).name }
+    subject { city.name }
     it { is_expected.not_to be_nil }
     it { is_expected.to eq(name) }
   end

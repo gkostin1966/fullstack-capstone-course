@@ -7,7 +7,7 @@ gem 'rails-api', '~>0.4', '>=0.4.0'
 gem 'pry-rails', '~>0.3', '>=0.3.4'
 gem 'rack-cors', '~>0.4', '>=0.4.0', :require => 'rack/cors'
 
-gem 'sass-rails', '~>5.0', '>=3.4.22'
+gem 'sass-rails', '~>5.0', '>=5.0.4'
 gem 'uglifier', '~>3.0', '>=3.0.2'
 gem 'coffee-rails', '~>4.1', '>=4.1.0'
 gem 'jquery-rails', '~>4.2', '>=4.2.1'
@@ -36,6 +36,8 @@ gem 'puma', '~>3.6', '>=3.6.0', :platforms=>:ruby
 gem 'pg', '~>0.19', '>=0.19.0'
 gem 'mongoid', '~>5.1', '>=5.1.5'
 gem 'database_cleaner', '~>1.5', '>=1.5.3'
+gem 'factory_girl_rails', '~>4.7', '>=4.7.0'
+gem 'faker', '~>1.6', '>=1.6.6'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
