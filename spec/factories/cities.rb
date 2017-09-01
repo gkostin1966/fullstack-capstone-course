@@ -1,4 +1,11 @@
 FactoryGirl.define do
+  factory :city, parent: :city_faker do
+  end
+
+  factory :city_faker, class: 'City' do
+    name { Faker::Name.name }
+  end
+
   factory :city_fixed, class: 'City' do
     name "test"
   end
@@ -21,17 +28,10 @@ FactoryGirl.define do
     end
   end
 
-  factory :city_faker, class: 'City' do
-    name { Faker::Name.name }
-  end
-
   factory :city_ctor, class: 'City' do
     transient do
       hash {}
     end
     initialize_with { City.new(hash) }
-  end
-
-  factory :city, parent: :city_faker do
   end
 end

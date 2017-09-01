@@ -9,7 +9,7 @@ RSpec.describe City, type: :model do
   let(:city) { City.find(@city.id) }
 
   before(:all) do
-    @city = create(:city, name: name )
+    @city = create(:city, name: name)
   end
 
   describe '#create' do

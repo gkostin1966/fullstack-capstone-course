@@ -45,6 +45,7 @@ RSpec.describe "Cities", type: :request do
     it do
       get city_path(city.id)
       expect(response).to have_http_status(:ok)
+      expect(response.content_type).to eq('application/json')
 
       payload = parsed_body
       expect(payload).to have_key('id')

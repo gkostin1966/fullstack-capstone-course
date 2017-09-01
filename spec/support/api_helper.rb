@@ -23,3 +23,67 @@ module ApiHelper
     end
   end
 end
+
+RSpec.shared_examples 'resource#index' do |model|
+  let!(:resources) { (1..5).map { |idx| FactoryGirl.create(model) } }
+  let(:payload) { parsed_body }
+
+  it "indexes #{model}" do
+    get send("#{model}s_path"), {}, {"Accept"=>"application/json"}
+    expect(response).to have_http_status(:ok)
+    expect(response.content_type).to eq('application/json')
+    expect(payload.count).to eq(resources.count)
+    response_check  if respond_to?(:response_check)
+  end
+end
+
+RSpec.shared_examples 'resource#create' do |model|
+  let(:resource_state) { FactoryGirl.attributes_for(model) }
+  let(:payload) { parsed_body }
+
+  it "creates #{model}" do
+    jpost send("#{model}s_path"), resource_state
+    expect(response).to have_http_status(:created)
+    expect(response.content_type).to eq('application/json')
+    response_check  if respond_to?(:response_check)
+  end
+end
+
+RSpec.shared_examples 'resource#show' do |model|
+  let(:resource) { FactoryGirl.create(model) }
+  let(:payload) { parsed_body }
+
+  it "shows #{model}" do
+    get send("#{model}_path", resource.id)
+    expect(response).to have_http_status(:ok)
+    expect(response.content_type).to eq('application/json')
+    response_check  if respond_to?(:response_check)
+  end
+end
+
+RSpec.shared_examples 'resource#update' do |model, attrs|
+  let(:resource) { FactoryGirl.create(model) }
+  it "updates #{model}" do
+    attrs.each do |key, value|
+      expect(resource[key]).not_to eq(value)
+    end
+    jput send("#{model}_path", resource.id), attrs
+    expect(response).to have_http_status(:no_content)
+    response_check  if respond_to?(:response_check)
+  end
+end
+
+RSpec.shared_examples 'resource#destroy' do |model|
+  let(:resource) { FactoryGirl.create(model) }
+
+  it "destroys #{model}" do
+    head send("#{model}_path", resource.id)
+    expect(response).to have_http_status(:ok)
+
+    delete send("#{model}_path", resource.id)
+    expect(response).to have_http_status(:no_content)
+
+    head send("#{model}_path", resource.id)
+    expect(response).to have_http_status(:not_found)
+  end
+end
