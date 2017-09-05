@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Mainpages', type: :feature do
+RSpec.feature 'Mainpages', type: :feature, :js=>true do
   context 'when the main page is accessed'  do
     before(:each) do
       visit '/'
@@ -16,7 +16,7 @@ RSpec.feature 'Mainpages', type: :feature do
       expect(page).to have_content('Sample App (from spa-demo/pages/main.html)')
     end
     it 'displays the foos title' do
-      expect(page).to have_content('Foos (from spa-demo/foos/foos.html)')
+      expect(page).to have_content('Cities (from spa-demo/cities/cities.html)')
     end
   end
 end
