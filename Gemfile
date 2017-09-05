@@ -25,7 +25,12 @@ group :development, :test do
   gem 'httparty', '~>0.14', '>=0.14.0'
 
   gem 'rspec-rails', '~> 3.5', '>=3.5.2'
-  gem 'mongoid-rspec', '~> 3.0', '>=3.0.0'
+  gem 'mongoid-rspec', '~>3.0', '>=3.0.0'
+  gem 'capybara', '~>2.10', '>=2.10.1'
+  # gem 'poltergeist', '~>1.11', '>=1.11.0'
+  # gem 'selenium-webdriver', '~> 2.53', '>=2.53.4'
+  # gem 'chromedriver-helper', '~>1.0', '>=1.0.0'
+  # gem 'launchy', '~>2.4', '>=2.4.3'
 end
 
 group :production do
