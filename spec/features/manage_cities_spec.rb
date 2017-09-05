@@ -1,11 +1,12 @@
 require 'rails_helper'
+require 'support/city_ui_helper'
 
 RSpec.feature "ManageCities", type: :feature, :js=>true do
   include_context 'db_cleanup_each' # transactions won't work because using different threads for server and client
+  include CityUiHelper
 
-  CITY_FORM_CSS='body > div > div > div > div > form'
-  CITY_FORM_XPATH="//h3[text()='Cities']/../form"
-  CITY_LIST_XPATH="//h3[text()='Cities']/../ul"
+  CITY_FORM_XPATH=CityUiHelper::CITY_FORM_XPATH
+  CITY_LIST_XPATH=CityUiHelper::CITY_LIST_XPATH
 
   # feature == context
   feature 'view existing Cities' do
@@ -74,10 +75,62 @@ RSpec.feature "ManageCities", type: :feature, :js=>true do
         expect(page).to have_xpath("//*[text()='#{city_state[:name]}']")
       end
     end
+
+    scenario 'complete form with helper' do
+      create_city city_state
+      within(:xpath, CITY_LIST_XPATH) do
+        expect(page).to have_xpath("//li", count:1)
+        # expect(page).to have_content(city_state[:name])
+        # expect(page).to have_xpath("//*[text()='#{city_state[:name]}']")
+      end
+    end
   end
 
   feature 'with existing City' do
-    scenario 'can be updated'
-    scenario 'can be deleted'
+    let(:city_state) { FactoryGirl.attributes_for(:city) }
+
+    background(:each) do # background == before
+      create_city city_state
+    end
+
+    scenario 'can be updated' do
+      existing_name = city_state[:name]
+      new_name = FactoryGirl.attributes_for(:city)[:name]
+
+      within(:xpath, CITY_LIST_XPATH) do
+        expect(page).to have_xpath("//li", count:1)
+        expect(page).to have_xpath("//li", text: existing_name)
+        expect(page).to have_no_xpath("//li", text: new_name)
+        find(:xpath, "//a[text()='#{existing_name}']").click
+      end
+      within(:xpath, CITY_FORM_XPATH) do
+        expect(page).to have_xpath("//li", text: existing_name)
+        # find_field('name', readonly: false, wait: 5)
+        fill_in('name', with: new_name)
+        click_button('Update City')
+      end
+      within(:xpath, CITY_LIST_XPATH) do
+        expect(page).to have_xpath("//li", count:1)
+        expect(page).to have_no_xpath("//li", text: existing_name)
+        expect(page).to have_xpath("//li", text: new_name)
+        # save_and_open_page
+      end
+    end
+
+    scenario 'can be deleted' do
+      within(:xpath, CITY_LIST_XPATH) do
+        expect(page).to have_xpath("//li", count:1)
+        expect(page).to have_xpath("//li", text: city_state[:name])
+        find(:xpath, "//a[text()='#{city_state[:name]}']").click
+      end
+      within(:xpath, CITY_FORM_XPATH) do
+        expect(page).to have_xpath("//li", text: city_state[:name])
+        click_button('Delete City')
+      end
+      within(:xpath, CITY_LIST_XPATH) do
+        expect(page).to have_xpath("//li", count:0)
+        expect(page).to have_no_xpath("//li", text: city_state[:name])
+      end
+    end
   end
 end
