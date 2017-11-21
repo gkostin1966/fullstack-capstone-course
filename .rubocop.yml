@@ -1,0 +1,12 @@
+require: rubocop-rspec
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  DisplayCopNames: true
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'tmp/**/*'
+
+

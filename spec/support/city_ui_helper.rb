@@ -1,7 +1,7 @@
 module CityUiHelper
   CITY_FORM_CSS='body > div > div > div > div > form'
-  CITY_FORM_XPATH="//h3[text()='Cities']/../form"
-  CITY_LIST_XPATH="//h3[text()='Cities']/../ul"
+  CITY_FORM_XPATH="//h3[text()='Cities']/../form" # form is sibling of h3
+  CITY_LIST_XPATH="//h3[text()='Cities']/../ul" # ul is sibling of h3
 
   def create_city city_state
     visit root_path unless page.has_css?('h3', text: 'Cities') # on the Cities page

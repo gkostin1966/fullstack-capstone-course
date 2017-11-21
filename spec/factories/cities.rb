@@ -28,7 +28,7 @@ FactoryGirl.define do
     end
   end
 
-  factory :city_ctor, class: 'City' do
+  factory :city_constructor, class: 'City' do
     transient do
       hash {}
     end

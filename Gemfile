@@ -32,6 +32,9 @@ group :development, :test do
   gem 'chromedriver-helper', '~>1.0', '>=1.0.0'
   gem 'launchy', '~>2.4', '>=2.4.3'
   gem 'simplecov', '~>0', '>=0.12', :require=>false
+
+  gem 'rubocop', '~> 0.49.1'
+  gem 'rubocop-rspec', '~> 1.16.0'
 end
 
 group :production do

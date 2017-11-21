@@ -25,8 +25,8 @@ RSpec.describe State, type: :model, orm: :mongoid do
   end
 
   describe '#name' do
-    let(:name) { "name" }
     subject { described_class.create(name: name).name }
+    let(:name) { "name" }
     # subject { state.name }
     it { is_expected.not_to be_nil }
     it { is_expected.to eq(name) }
