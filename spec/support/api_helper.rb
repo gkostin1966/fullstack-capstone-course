@@ -56,6 +56,8 @@ end
 
 def logout status = :ok
   jdelete destroy_user_session_path
+  @last_tokens = {}
+  expect(repsonse).to have_http_status(status) if status
 end
 
 RSpec.shared_examples 'resource#index' do |model|
@@ -63,7 +65,7 @@ RSpec.shared_examples 'resource#index' do |model|
   let(:payload) { parsed_body }
 
   it "indexes #{model}" do
-    get send("#{model}s_path"), {}, {"Accept"=>"application/json"}
+    jget send("#{model}s_path"), {}, {"Accept"=>"application/json"}
     expect(response).to have_http_status(:ok)
     expect(response.content_type).to eq('application/json')
     expect(payload.count).to eq(resources.count)
@@ -88,7 +90,7 @@ RSpec.shared_examples 'resource#show' do |model|
   let(:payload) { parsed_body }
 
   it "shows #{model}" do
-    get send("#{model}_path", resource.id)
+    jget send("#{model}_path", resource.id)
     expect(response).to have_http_status(:ok)
     expect(response.content_type).to eq('application/json')
     response_check  if respond_to?(:response_check)
@@ -111,13 +113,13 @@ RSpec.shared_examples 'resource#destroy' do |model|
   let(:resource) { FactoryGirl.create(model) }
 
   it "destroys #{model}" do
-    head send("#{model}_path", resource.id)
+    jhead send("#{model}_path", resource.id)
     expect(response).to have_http_status(:ok)
 
-    delete send("#{model}_path", resource.id)
+    jdelete send("#{model}_path", resource.id)
     expect(response).to have_http_status(:no_content)
 
-    head send("#{model}_path", resource.id)
+    jhead send("#{model}_path", resource.id)
     expect(response).to have_http_status(:not_found)
   end
 end
