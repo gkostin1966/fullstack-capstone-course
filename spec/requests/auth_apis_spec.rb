@@ -68,12 +68,21 @@ RSpec.describe "Authentication Api", type: :request do
   end
 
   context 'login' do
+    let(:account) { signup user_props, :ok }
+    let!(:user) { login account, :ok }
+
     context 'valid user login' do
-      it 'generates access token'
+      it 'generates access token' do
+        expect(response.headers).to include('uid' => account[:uid])
+        expect(response.headers).to include('access-token')
+        expect(response.headers).to include('client')
+        expect(response.headers).to include('token-type' => 'Bearer')
+      end
       it 'grants access to resource'
       it 'grants access to resource multiple times'
       it 'logout'
     end
+
     context 'invalid password' do
       it 'rejects credentials'
     end
