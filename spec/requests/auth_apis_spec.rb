@@ -78,8 +78,32 @@ RSpec.describe "Authentication Api", type: :request do
         expect(response.headers).to include('client')
         expect(response.headers).to include('token-type' => 'Bearer')
       end
-      it 'grants access to resource'
-      it 'grants access to resource multiple times'
+
+      it 'extracts access headers' do
+        expect(access_tokens?).to be true
+        expect(access_tokens).to include('uid' => account[:uid])
+        expect(access_tokens).to include('access-token')
+        expect(access_tokens).to include('client')
+        expect(access_tokens).to include('token-type' => 'Bearer')
+      end
+
+      it 'grants access to resource' do
+        get authn_checkme_path, access_tokens
+        expect(response).to have_http_status(:ok)
+
+        payload = parsed_body
+        expect(payload).to include('id' => account[:id])
+        expect(payload).to include('uid' => account[:uid])
+      end
+
+      it 'grants access to resource multiple times' do
+        (1..10).each do |index|
+          # quick calls < 5 sec use same tokens
+          get authn_checkme_path, access_tokens
+          expect(response).to have_http_status(:ok)
+        end
+      end
+
       it 'logout'
     end
 

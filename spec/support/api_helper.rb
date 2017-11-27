@@ -40,6 +40,17 @@ def login credentials, status = :ok
   return response.ok? ? parsed_body['data'] : parsed_body
 end
 
+def access_tokens?
+  !response.headers['access-token'].nil? if response
+end
+
+def access_tokens
+  if access_tokens?
+    @last_tokens = ['uid', 'client', 'token-type', 'access-token'].inject({}) { |hash, key| hash[key] = response.headers[key]; hash }
+  end
+  @last_tokens || {}
+end
+
 
 RSpec.shared_examples 'resource#index' do |model|
   let!(:resources) { (1..5).map { |idx| FactoryGirl.create(model) } }
