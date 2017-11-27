@@ -16,10 +16,13 @@ module ApiHelper
 =end
 
   # automates the passing of payload bodies as json
-  ['post', 'put'].each do |http_method_name|
+  ['post', 'put', 'patch', 'get', 'head', 'delete'].each do |http_method_name|
     define_method("j#{http_method_name}") do |path, params={}, headers={}|
-      headers = headers.merge('Content-Type' => 'application/json') if params.present?
-      self.send(http_method_name, path, params.to_json, headers)
+      if ['post', 'put', 'patch'].include? http_method_name
+        headers = headers.merge('Content-Type' => 'application/json') if params.present?
+        params = params.to_json
+      end
+      self.send(http_method_name, path, params, headers.merge(access_tokens))
     end
   end
 end
@@ -51,6 +54,9 @@ def access_tokens
   @last_tokens || {}
 end
 
+def logout status = :ok
+  jdelete destroy_user_session_path
+end
 
 RSpec.shared_examples 'resource#index' do |model|
   let!(:resources) { (1..5).map { |idx| FactoryGirl.create(model) } }

@@ -88,7 +88,7 @@ RSpec.describe "Authentication Api", type: :request do
       end
 
       it 'grants access to resource' do
-        get authn_checkme_path, access_tokens
+        jget authn_checkme_path #, access_tokens
         expect(response).to have_http_status(:ok)
 
         payload = parsed_body
@@ -99,16 +99,26 @@ RSpec.describe "Authentication Api", type: :request do
       it 'grants access to resource multiple times' do
         (1..10).each do |index|
           # quick calls < 5 sec use same tokens
-          get authn_checkme_path, access_tokens
+          jget authn_checkme_path #, access_tokens
           expect(response).to have_http_status(:ok)
         end
       end
 
-      it 'logout'
+      it 'logout' do
+        logout :ok
+        expect(access_tokens?).to be false
+
+        jget authn_checkme_path
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
 
     context 'invalid password' do
-      it 'rejects credentials'
+      it 'rejects credentials' do
+        logout :ok
+        account[:password] = Faker::Internet.password
+        login account, :unauthorized
+      end
     end
   end
 end
