@@ -24,6 +24,11 @@ module ApiHelper
   end
 end
 
+def signup registration, status = :ok
+  jpost user_registration_path, registration
+  expect(response).to have_http_status(status)
+end
+
 RSpec.shared_examples 'resource#index' do |model|
   let!(:resources) { (1..5).map { |idx| FactoryGirl.create(model) } }
   let(:payload) { parsed_body }
